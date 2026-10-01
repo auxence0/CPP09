@@ -6,7 +6,7 @@
 #    By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/22 11:52:07 by asauvage          #+#    #+#              #
-#    Updated: 2026/09/30 11:26:06 by asauvage         ###   ########.fr        #
+#    Updated: 2026/10/01 16:23:57 by asauvage         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 NAME = btc
 
 SRCS = main.cpp \
-	   BitcoinEchange.cpp
+	   Parser.cpp
 
 OBJS := $(SRCS:.cpp=.o)
 
