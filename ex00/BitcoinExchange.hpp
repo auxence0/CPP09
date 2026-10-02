@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 11:26:30 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/01 16:34:23 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/02 17:31:14 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string>
 # include <fstream>
 # include <exception>
+# include <sstream>
 
 class	Parser {
 	public:
@@ -27,10 +28,18 @@ class	Parser {
 		Parser( const Parser& obj );
 		Parser&	operator=( const Parser& rhs );
 		~Parser();
-	
-		// void	fill_map();
 
+		void	ParseLine( const std::string& line );
+		void	ReadInput( const std::string& str );
+		void	FirstLineCheck( std::ifstream* input );
+		void	VerifDate();
+	private:
 		std::map<std::string, float>	btc_csv_;
+		std::string	date_;
+		std::string	value_;
+		char		sep_;
+		char		smth_;
+		int			
 };
 
 #endif
