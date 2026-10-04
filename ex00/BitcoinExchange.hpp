@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/30 11:26:30 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/04 17:42:12 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/04 18:37:59 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ class	Parser {
 
 		void	ParseLine( const std::string& line );
 		void	ReadInput( const std::string& str );
-		void	FirstLineCheck( std::ifstream* input );
+		void	FirstLineCheck( std::string& line );
 		bool	VerifDate( const std::string& line );
+		bool	VerifFormatDate();		
 		bool	VerifValue( const std::string& line );
+		void	DisplayLine();
 	private:
 		std::map<std::string, float>	btc_csv_;
 		std::string	date_;

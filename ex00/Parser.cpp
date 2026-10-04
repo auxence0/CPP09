@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 14:14:45 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/04 18:04:26 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/04 18:55:50 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,23 @@ Parser&	Parser::operator=( const Parser& rhs ) {
 Parser::~Parser() {
 }
 
+bool	Parser::VerifFormatDate() {
+	size_t	i(0);
+	while (date_[i] != '-')
+		i++;
+	if (i++ != 4)
+		return false;
+	while (date_[i] != '-')
+		i++;
+	if (i++ != 7)
+		return false;
+	while (date_[i])
+		i++;
+	if (i != 10)
+		return false;
+	return true;
+}
+
 bool	Parser::VerifDate( const std::string& line ) {
 	std::istringstream	date_stream(date_);
 	int		Y, M, D;
@@ -53,6 +70,10 @@ bool	Parser::VerifDate( const std::string& line ) {
 	if (sep1 != '-' || sep2 != '-') {
 		std::cout << "Error: bad input => " << line << "\n";
 		return false;
+	}
+	if (!VerifFormatDate()) {
+		std::cout << "Error: bad input => " << line << "\n";
+		return false;	
 	}
 	else if (M < 1 || M > 12 || D < 1) {
 		std::cout << "Error: bad input => " << line << "\n";
@@ -137,26 +158,45 @@ bool	Parser::VerifValue( const std::string& line ) {
 	return true;
 }
 
+void	Parser::DisplayLine() {
+	std::map<std::string, float>::iterator	it = btc_csv_.upper_bound(date_);
+	if (it != btc_csv_.begin())
+		--it;
+	std::cout << date_ << " => " << float_value_ << " = " << float_value_ * it->second << "\n";
+}
+
 void	Parser::ParseLine( const std::string& line ) {
 	std::istringstream	stream_line(line);
 
-	if (!(stream_line >> date_ >> sep_ >> value_ >> smth_)) {
+	if (!(stream_line >> date_ >> sep_ >> value_)) {
 		std::cout << "Error: bad input => " << line << "\n";
+		return;
+	}
+	stream_line >> std::ws;
+	if (!stream_line.eof()) {
+		std::cout << "Error: bad input => " << line << "\n";
+		return;
 	}
 	if (!VerifDate(line))
 		return;
-	if (!VerifValue(line));
+	if (!VerifValue(line))
+		return;
+	DisplayLine();
 }
 
-void	Parser::FirstLineCheck( std::ifstream* input ) {
-	std::string	line;
-	getline(*input, line);
+void	Parser::FirstLineCheck( std::string& line ) {
 	std::istringstream	first_line(line);
 
-	if (!(first_line >> date_ >> sep_ >> value_ >> smth_)) {
+	if (!(first_line >> date_ >> sep_ >> value_)) {
 		std::cout << "Error: bad input => " << line << "\n";
+		return ;
 	}
-	if (date_ != "date" || sep_ != '|' || value_ != "value" || smth_) {
+	first_line >> std::ws;
+	if (!first_line.eof()) {
+		std::cout << "Error: bad input => " << line << "\n";
+		return ;
+	}
+	if (date_ != "date" || sep_ != '|' || value_ != "value") {
 		ParseLine(line);
 	}
 }
@@ -166,5 +206,10 @@ void	Parser::ReadInput( const std::string& str ) {
 	if (!input)
 		throw	std::runtime_error("Error: could not open file.");
 
-	FirstLineCheck(&input);
+	std::string	line;
+	getline(input, line);
+	FirstLineCheck(line);
+	while (getline(input, line)) {
+		ParseLine(line);
+	}
 }
