@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 15:05:35 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/14 14:21:43 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/14 15:55:50 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@
 # include <deque>
 # include <cstdlib>
 
+struct	Element {
+	int	Value;
+	std::vector<Element> losers;
+};
+
 class	Pmerge {
 	public:
 		Pmerge( char **str );
@@ -29,9 +34,13 @@ class	Pmerge {
 		Pmerge&	operator=( const Pmerge& rhs );
 		~Pmerge();
 		bool	verifInt(char *str);
+		std::vector<Element>	FordJohnson( const std::vector<Element>& container );
+		void	Sort();
 	private:
 		Pmerge();
-		std::set<int>	double_;
+		std::set<int>			double_;
+		std::vector<Element>	vect_;
+		std::deque<Element>		deque_;
 };
 
 #endif
