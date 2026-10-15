@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 15:05:35 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/14 15:55:50 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/15 17:54:36 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@
 # include <cstdlib>
 
 struct	Element {
-	int	Value;
+	int	value;
 	std::vector<Element> losers;
+};
+
+struct	PendElement {
+	Element	loser;
+	int		winner_value;
 };
 
 class	Pmerge {
@@ -33,9 +38,12 @@ class	Pmerge {
 		Pmerge( const Pmerge& obj );
 		Pmerge&	operator=( const Pmerge& rhs );
 		~Pmerge();
-		bool	verifInt(char *str);
-		std::vector<Element>	FordJohnson( const std::vector<Element>& container );
-		void	Sort();
+		bool						verifInt(char *str);
+		void						Sort();
+		void						Dichotomie( std::vector<Element>& Dichotomie, int i, Element search );
+		int							DichotomieIndex( std::vector<Element>& Dichotomie, int search);
+		std::vector<Element>		FordJohnson( const std::vector<Element>& container );
+		std::vector<PendElement>	ExtractLosers( std::vector<Element>& main_chain );
 	private:
 		Pmerge();
 		std::set<int>			double_;

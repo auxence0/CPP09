@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/13 16:19:32 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/14 14:18:48 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/15 15:26:46 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int ac, char **av) {
 	}
 	try {
 		Pmerge	merge(av);
+		merge.Sort();
 	}
 	catch (std::exception& e) {
 		std::cerr << e.what() << "\n";
