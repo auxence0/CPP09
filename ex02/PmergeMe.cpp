@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 15:05:54 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/15 17:57:11 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/15 18:03:51 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,12 @@ std::vector<Element>	Pmerge::FordJohnson( const std::vector<Element>& container 
 	size_t	size_container = new_container.size();
 
 	std::vector<PendElement>	losers_lst = ExtractLosers(new_container);
+	std::vector<PendElement>::iterator	it(losers_lst.begin());
+	while (it != losers_lst.end()) {
+		std::cout << it->loser.value << ", ";
+		++it;
+	}
+	std::cout << "\n";
 	while ( Jnm1 <= size_container ) {
 		if (Jn == 1) {
 			new_container.insert(new_container.begin(), losers_lst[i].loser);
