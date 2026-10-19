@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 15:05:35 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/15 17:54:36 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/19 18:56:24 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <vector>
 # include <deque>
 # include <cstdlib>
+# include <sys/time.h>
+# include <iomanip>
 
 struct	Element {
 	int	value;
@@ -41,9 +43,14 @@ class	Pmerge {
 		bool						verifInt(char *str);
 		void						Sort();
 		void						Dichotomie( std::vector<Element>& Dichotomie, int i, Element search );
+		void						Dichotomie( std::deque<Element>& Dichotomie, int i, Element search );
 		int							DichotomieIndex( std::vector<Element>& Dichotomie, int search);
+		int							DichotomieIndex( std::deque<Element>& Dichotomie, int search);
 		std::vector<Element>		FordJohnson( const std::vector<Element>& container );
+		std::deque<Element>			FordJohnson( const std::deque<Element>& container );
 		std::vector<PendElement>	ExtractLosers( std::vector<Element>& main_chain );
+		std::deque<PendElement>		ExtractLosers( std::deque<Element>& main_chain );
+		void						DisplayContainer();
 	private:
 		Pmerge();
 		std::set<int>			double_;
