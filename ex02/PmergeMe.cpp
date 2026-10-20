@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 15:05:54 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/19 19:09:23 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/20 15:29:10 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ Pmerge::Pmerge( char **str ) {
 		if (double_.find(num) != double_.end())
 			throw	std::runtime_error("Error: Duplicate number");
 		double_.insert(num);
-		Element	elt;
-		elt.value = num;
-		vect_.push_back(elt);
-		deque_.push_back(elt);
+		Element_v	elt_v;
+		Element_d	elt_d;
+		elt_v.value = num;
+		elt_d.value = num;
+		vect_.push_back(elt_v);
+		deque_.push_back(elt_d);
 		i++;
 	}
 }
@@ -69,7 +71,7 @@ bool	Pmerge::verifInt(char *str) {
 }
 
 void	Pmerge::DisplayContainer() {
-	std::vector<Element>::iterator	it(vect_.begin());
+	std::vector<Element_v>::iterator	it(vect_.begin());
 	size_t	nb_num(0);
 
 	while (it != vect_.end() && nb_num++ < 15) {
@@ -82,7 +84,7 @@ void	Pmerge::DisplayContainer() {
 	std::cout << "\n";
 }
 
-void	Pmerge::Dichotomie( std::vector<Element>& Dichotomie, int i, Element search ) {
+void	Pmerge::Dichotomie( std::vector<Element_v>& Dichotomie, int i, Element_v search ) {
 	int	mid(0);
 	int	start(0);
 	int	end(i);
@@ -97,7 +99,7 @@ void	Pmerge::Dichotomie( std::vector<Element>& Dichotomie, int i, Element search
 	Dichotomie.insert(Dichotomie.begin() + start, search);
 }
 
-int	Pmerge::DichotomieIndex( std::vector<Element>& Dichotomie, int search ) {
+int	Pmerge::DichotomieIndex( std::vector<Element_v>& Dichotomie, int search ) {
 	int	mid(0);
 	int	start(0);
 	int	end(Dichotomie.size() - 1);
@@ -112,13 +114,13 @@ int	Pmerge::DichotomieIndex( std::vector<Element>& Dichotomie, int search ) {
 	return start;
 }
 
-std::vector<PendElement>	Pmerge::ExtractLosers( std::vector<Element>& main_chain ) {
+std::vector<PendElement_v>	Pmerge::ExtractLosers( std::vector<Element_v>& main_chain ) {
 	size_t						i(0);
-	std::vector<PendElement>	pend;
+	std::vector<PendElement_v>	pend;
 
 	while (i < main_chain.size()) {
-		Element	loser_ = main_chain[i].losers.back();
-		PendElement	PendElt;
+		Element_v	loser_ = main_chain[i].losers.back();
+		PendElement_v	PendElt;
 		PendElt.loser = loser_;
 		PendElt.winner_value = main_chain[i].value;
 		pend.push_back(PendElt);
@@ -127,8 +129,8 @@ std::vector<PendElement>	Pmerge::ExtractLosers( std::vector<Element>& main_chain
 	return pend;
 }
 
-std::vector<Element>	Pmerge::FordJohnson( const std::vector<Element>& container ) {
-	Element	last_elt;
+std::vector<Element_v>	Pmerge::FordJohnson( const std::vector<Element_v>& container ) {
+	Element_v	last_elt;
 	bool	odd(false);
 
 	if (container.size() <= 1)
@@ -138,15 +140,15 @@ std::vector<Element>	Pmerge::FordJohnson( const std::vector<Element>& container 
 		last_elt = container.back();
 	}
 
-	std::vector<Element>	new_container;
+	std::vector<Element_v>	new_container;
 	for (size_t	i(0); i < container.size() - odd; i+= 2) {
 		if (container[i].value > container[i + 1].value) {
-			Element	Winner = container[i];
+			Element_v	Winner = container[i];
 			Winner.losers.push_back(container[i + 1]);
 			new_container.push_back(Winner);
 		}
 		else {
-			Element	Winner = container[i + 1];
+			Element_v	Winner = container[i + 1];
 			Winner.losers.push_back(container[i]);
 			new_container.push_back(Winner);
 		}
@@ -154,7 +156,7 @@ std::vector<Element>	Pmerge::FordJohnson( const std::vector<Element>& container 
 
 	new_container = FordJohnson(new_container);
 
-	std::vector<PendElement>	losers_lst = ExtractLosers(new_container);
+	std::vector<PendElement_v>	losers_lst = ExtractLosers(new_container);
 	if (!losers_lst.empty())
 		new_container.insert(new_container.begin(), losers_lst[0].loser);
 	
@@ -180,7 +182,7 @@ std::vector<Element>	Pmerge::FordJohnson( const std::vector<Element>& container 
 	return new_container;
 }
 
-void	Pmerge::Dichotomie( std::deque<Element>& Dichotomie, int i, Element search ) {
+void	Pmerge::Dichotomie( std::deque<Element_d>& Dichotomie, int i, Element_d search ) {
 	int	mid(0);
 	int	start(0);
 	int	end(i);
@@ -195,7 +197,7 @@ void	Pmerge::Dichotomie( std::deque<Element>& Dichotomie, int i, Element search 
 	Dichotomie.insert(Dichotomie.begin() + start, search);
 }
 
-int	Pmerge::DichotomieIndex( std::deque<Element>& Dichotomie, int search ) {
+int	Pmerge::DichotomieIndex( std::deque<Element_d>& Dichotomie, int search ) {
 	int	mid(0);
 	int	start(0);
 	int	end(Dichotomie.size() - 1);
@@ -210,13 +212,13 @@ int	Pmerge::DichotomieIndex( std::deque<Element>& Dichotomie, int search ) {
 	return start;
 }
 
-std::deque<PendElement>	Pmerge::ExtractLosers( std::deque<Element>& main_chain ) {
+std::deque<PendElement_d>	Pmerge::ExtractLosers( std::deque<Element_d>& main_chain ) {
 	size_t						i(0);
-	std::deque<PendElement>	pend;
+	std::deque<PendElement_d>	pend;
 
 	while (i < main_chain.size()) {
-		Element	loser_ = main_chain[i].losers.back();
-		PendElement	PendElt;
+		Element_d	loser_ = main_chain[i].losers.back();
+		PendElement_d	PendElt;
 		PendElt.loser = loser_;
 		PendElt.winner_value = main_chain[i].value;
 		pend.push_back(PendElt);
@@ -225,8 +227,8 @@ std::deque<PendElement>	Pmerge::ExtractLosers( std::deque<Element>& main_chain )
 	return pend;
 }
 
-std::deque<Element>	Pmerge::FordJohnson( const std::deque<Element>& container ) {
-	Element	last_elt;
+std::deque<Element_d>	Pmerge::FordJohnson( const std::deque<Element_d>& container ) {
+	Element_d	last_elt;
 	bool	odd(false);
 
 	if (container.size() <= 1)
@@ -236,15 +238,15 @@ std::deque<Element>	Pmerge::FordJohnson( const std::deque<Element>& container ) 
 		last_elt = container.back();
 	}
 
-	std::deque<Element>	new_container;
+	std::deque<Element_d>	new_container;
 	for (size_t	i(0); i < container.size() - odd; i+= 2) {
 		if (container[i].value > container[i + 1].value) {
-			Element	Winner = container[i];
+			Element_d	Winner = container[i];
 			Winner.losers.push_back(container[i + 1]);
 			new_container.push_back(Winner);
 		}
 		else {
-			Element	Winner = container[i + 1];
+			Element_d	Winner = container[i + 1];
 			Winner.losers.push_back(container[i]);
 			new_container.push_back(Winner);
 		}
@@ -252,7 +254,7 @@ std::deque<Element>	Pmerge::FordJohnson( const std::deque<Element>& container ) 
 
 	new_container = FordJohnson(new_container);
 
-	std::deque<PendElement>	losers_lst = ExtractLosers(new_container);
+	std::deque<PendElement_d>	losers_lst = ExtractLosers(new_container);
 	if (!losers_lst.empty())
 		new_container.insert(new_container.begin(), losers_lst[0].loser);
 	
