@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 14:14:45 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/05 11:58:58 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/21 16:10:56 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ Parser::~Parser() {
 
 bool	Parser::VerifFormatDate() {
 	size_t	i(0);
-	while (date_[i] != '-')
+	while (date_[i] != '-' && isdigit(date_[i]))
 		i++;
 	if (i++ != 4)
 		return false;
-	while (date_[i] != '-')
+	while (date_[i] != '-' && isdigit(date_[i]))
 		i++;
 	if (i++ != 7)
 		return false;
-	while (date_[i])
+	while (date_[i] && isdigit(date_[i]))
 		i++;
 	if (i != 10)
 		return false;
