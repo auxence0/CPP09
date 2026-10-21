@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/05 16:04:16 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/06 15:01:42 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/21 16:16:13 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ bool	RPN::do_op( char op ) {
 			res = num1 * num2;
 			break;
 		case '/':
+			if (num2 == 0) {
+				std::cerr << "Error: can't devide by 0\n";
+				return false;
+			}
 			res = num1 / num2;
 			break;
 		case '+':
@@ -65,10 +69,10 @@ bool	RPN::do_op( char op ) {
 			res = num1 - num2;
 			break;
 	}
-		if (res < std::numeric_limits<int>::min() || res > std::numeric_limits<int>::max()) {
-			std::cerr << "Error: res of some operation overflow\n";
-			return false;
-		}
+	if (res < std::numeric_limits<int>::min() || res > std::numeric_limits<int>::max()) {
+		std::cerr << "Error: res of some operation overflow\n";
+		return false;
+	}
 	s_.push(static_cast<int>(res));
 	return true;
 }
