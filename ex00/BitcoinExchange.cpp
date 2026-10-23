@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 14:14:45 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/21 16:10:56 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/23 12:09:54 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,10 @@ void	Parser::DisplayLine() {
 void	Parser::ParseLine( const std::string& line ) {
 	std::istringstream	stream_line(line);
 
+	if (line.empty()) {
+		std::cout << "Error: line is empty\n";
+		return ;
+	}
 	if (!(stream_line >> date_ >> sep_ >> value_)) {
 		std::cout << "Error: bad input => " << line << "\n";
 		return;
@@ -187,6 +191,10 @@ void	Parser::ParseLine( const std::string& line ) {
 void	Parser::FirstLineCheck( std::string& line ) {
 	std::istringstream	first_line(line);
 
+	if (line.empty()) {
+		std::cout << "Error: line is empty\n";
+		return ;
+	}
 	if (!(first_line >> date_ >> sep_ >> value_)) {
 		std::cout << "Error: bad input => " << line << "\n";
 		return ;
