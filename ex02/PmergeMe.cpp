@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 15:05:54 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/20 15:29:10 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/23 12:34:44 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ Pmerge::Pmerge( char **str ) {
 
 Pmerge::Pmerge( const Pmerge& obj ) {
 	double_ = obj.double_;
+		vect_ = obj.vect_;
+		deque_ = obj.deque_;
 }
 
 Pmerge&	Pmerge::operator=( const Pmerge& rhs ) {
 	if (this != &rhs) {
 		double_ = rhs.double_;
+		vect_ = rhs.vect_;
+		deque_ = rhs.deque_;
 	}
 	return *this;
 }
@@ -99,7 +103,7 @@ void	Pmerge::Dichotomie( std::vector<Element_v>& Dichotomie, int i, Element_v se
 	Dichotomie.insert(Dichotomie.begin() + start, search);
 }
 
-int	Pmerge::DichotomieIndex( std::vector<Element_v>& Dichotomie, int search ) {
+int	Pmerge::EndBound( std::vector<Element_v>& Dichotomie, int search ) {
 	int	mid(0);
 	int	start(0);
 	int	end(Dichotomie.size() - 1);
@@ -169,7 +173,7 @@ std::vector<Element_v>	Pmerge::FordJohnson( const std::vector<Element_v>& contai
 			upper_bound = losers_lst.size() - 1;
 		
 		for (size_t	idx = upper_bound; idx > last_insert; --idx)
-			Dichotomie(new_container, DichotomieIndex(new_container, losers_lst[idx].winner_value), losers_lst[idx].loser);
+			Dichotomie(new_container, EndBound(new_container, losers_lst[idx].winner_value), losers_lst[idx].loser);
 
 		last_insert = upper_bound;
 		size_t	Jn = 2 * Jnm2 + Jnm1;
@@ -197,7 +201,7 @@ void	Pmerge::Dichotomie( std::deque<Element_d>& Dichotomie, int i, Element_d sea
 	Dichotomie.insert(Dichotomie.begin() + start, search);
 }
 
-int	Pmerge::DichotomieIndex( std::deque<Element_d>& Dichotomie, int search ) {
+int	Pmerge::EndBound( std::deque<Element_d>& Dichotomie, int search ) {
 	int	mid(0);
 	int	start(0);
 	int	end(Dichotomie.size() - 1);
@@ -267,7 +271,7 @@ std::deque<Element_d>	Pmerge::FordJohnson( const std::deque<Element_d>& containe
 			upper_bound = losers_lst.size() - 1;
 		
 		for (size_t	idx = upper_bound; idx > last_insert; --idx)
-			Dichotomie(new_container, DichotomieIndex(new_container, losers_lst[idx].winner_value), losers_lst[idx].loser);
+			Dichotomie(new_container, EndBound(new_container, losers_lst[idx].winner_value), losers_lst[idx].loser);
 
 		last_insert = upper_bound;
 		size_t	Jn = 2 * Jnm2 + Jnm1;

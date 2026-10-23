@@ -6,7 +6,7 @@
 /*   By: asauvage <asauvage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/06 15:05:35 by asauvage          #+#    #+#             */
-/*   Updated: 2026/10/20 15:26:52 by asauvage         ###   ########.fr       */
+/*   Updated: 2026/10/23 12:31:06 by asauvage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ class	Pmerge {
 		void						Sort();
 		void						Dichotomie( std::vector<Element_v>& Dichotomie, int i, Element_v search );
 		void						Dichotomie( std::deque<Element_d>& Dichotomie, int i, Element_d search );
-		int							DichotomieIndex( std::vector<Element_v>& Dichotomie, int search);
-		int							DichotomieIndex( std::deque<Element_d>& Dichotomie, int search);
+		int							EndBound( std::vector<Element_v>& Dichotomie, int search);
+		int							EndBound( std::deque<Element_d>& Dichotomie, int search);
 		std::vector<Element_v>		FordJohnson( const std::vector<Element_v>& container );
 		std::deque<Element_d>		FordJohnson( const std::deque<Element_d>& container );
 		std::vector<PendElement_v>	ExtractLosers( std::vector<Element_v>& main_chain );
